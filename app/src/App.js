@@ -24,6 +24,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    // Phantom Wallet team suggested doing this to ensure window is loaded up first
     const onLoad = async () => {
       await checkIfPhantomIsConnected();
     };

@@ -1,1 +1,0 @@
-# solana-nfts-drop-website

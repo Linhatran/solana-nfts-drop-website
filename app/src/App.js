@@ -1,27 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import twitterLogo from './assets/twitter-logo.svg';
-
-// Constants
-const TWITTER_HANDLE = '_buildspace';
-const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const App = () => {
-  const checkIfPhantomIsConnected = () => {
-    const { solana } = window;
-    
-    if (solana.isPhantom) {
-      console.log('Connected to Phantom wallet');
-    } else {
-      console.log(
-        'Phantom wallet not found. Please connect to a Phantom wallet'
-      );
+  const [walletAddress, setWalletAddress] = useState(null);
+
+  const checkIfPhantomIsConnected = async () => {
+    try {
+      const { solana } = window;
+
+      if (solana.isPhantom) {
+        console.log('Connected to Phantom wallet');
+        const resp = await window.solana.connect({ onlyIfTrusted: true });
+        console.log('Connect with public key: ', resp.publicKey.toString());
+        setWalletAddress(resp.publicKey.toString());
+      } else {
+        console.log(
+          'Phantom wallet not found. Please connect to a Phantom wallet'
+        );
+      }
+    } catch (e) {
+      console.log('Error:', e);
     }
   };
 
   useEffect(() => {
-    checkIfPhantomIsConnected();
+    const onLoad = async () => {
+      await checkIfPhantomIsConnected();
+    };
+    window.addEventListener('load', onLoad);
+    return () => window.removeEventListener('load', onLoad);
   }, []);
+
+  const connectToPhantomWallet = async () => {
+    const { solana } = window;
+
+    if (solana.isPhantom) {
+      console.log('Connected to Phantom wallet');
+      const resp = await window.solana.connect({ onlyIfTrusted: true });
+      console.log('Connect with public key: ', resp.publicKey.toString());
+      setWalletAddress(resp.publicKey.toString());
+    }
+  };
 
   return (
     <div className='App'>
@@ -29,6 +48,14 @@ const App = () => {
         <div className='header-container'>
           <p className='header'>🍭 Candy Drop</p>
           <p className='sub-text'>NFT drop machine with fair mint</p>
+          {!walletAddress && (
+            <button
+              className='cta-button connect-wallet-button'
+              onClick={connectToPhantomWallet}
+            >
+              Connect to Wallet
+            </button>
+          )}
         </div>
       </div>
     </div>

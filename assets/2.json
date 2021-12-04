@@ -1,0 +1,19 @@
+{
+  "name": "Golden Gate Park",
+  "symbol": "",
+  "image": "2.png",
+  "properties": {
+    "files": [
+      {
+        "uri": "2.png",
+        "type": "image/png"
+      }
+    ],
+    "creators": [
+      {
+        "address": "6bh6jN4M4ummAsxeVtMa8ckYcn84ytoYR87XgnF7sZEb",
+        "share": 100
+      }
+    ]
+  }
+}

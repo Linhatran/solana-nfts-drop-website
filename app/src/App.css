@@ -48,7 +48,7 @@
 .cta-button {
   height: 45px;
   border: 0;
-  width: auto;
+  width: 200px;
   padding-left: 40px;
   padding-right: 40px;
   border-radius: 10px;
@@ -68,7 +68,7 @@
   background: -webkit-linear-gradient(left, #4e44ce, #35aee2);
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
-  margin-left: 10px;
+  margin: 0 auto;
 }
 
 .footer-container {

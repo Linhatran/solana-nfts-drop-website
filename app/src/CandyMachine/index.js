@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Program, Provider, web3 } from '@project-serum/anchor';
 import { MintLayout, TOKEN_PROGRAM_ID, Token } from '@solana/spl-token';
@@ -250,11 +250,66 @@ const CandyMachine = ({ walletAddress }) => {
     });
   };
 
+  useEffect(() => {
+    getCandyMachineState();
+  }, []);
+
+  const getProvider = () => {
+    const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST;
+    // Create a new connection object
+    const connection = new Connection(rpcHost);
+
+    // Create a new Solana provider object
+    const provider = new Provider(
+      connection,
+      window.solana,
+      opts.preflightCommitment
+    );
+
+    return provider;
+  };
+
+  const getCandyMachineState = async () => {
+    /**
+     * The IDL has info our web app needs around how to interact w/ the candy machine.
+     * The Program is an object that we can use to actually directly interact with the candy machine.
+     */
+
+    const provider = getProvider();
+    // get metadata about deployed candy machine
+    const idl = await Program.fetchIdl(candyMachineProgram, provider);
+    // create a new Program instance
+    const program = new Program(idl, candyMachineProgram, provider);
+    // fetch metadata from our candy machine
+    const candyMachine = await program.account.candyMachine.fetch(
+      process.env.REACT_APP_CANDY_MACHINE_ID
+    );
+
+    // metatada info
+    const itemsAvailable = candyMachine.data.itemsAvailable.toNumber();
+    const itemsRedeemed = candyMachine.data.itemsRedeemed?.toNumber() || 0;
+    const itemsRemaining = itemsAvailable - itemsRedeemed;
+    const goLiveData = candyMachine.data.goLiveDate?.toNumber();
+
+    const goLiveDateTimeString = `${new Date(
+      goLiveData * 1000
+    ).toLocaleDateString()} @ ${new Date(
+      goLiveData * 1000
+    ).toLocaleTimeString()}`;
+    
+    console.log({
+      itemsAvailable,
+      itemsRedeemed,
+      itemsRemaining,
+      goLiveData,
+      goLiveDateTimeString,
+    });
+  };
   return (
-    <div className="machine-container">
+    <div className='machine-container'>
       <p>Drop Date:</p>
       <p>Items Minted:</p>
-      <button className="cta-button mint-button" onClick={mintToken}>
+      <button className='cta-button mint-button' onClick={mintToken}>
         Mint NFT
       </button>
     </div>

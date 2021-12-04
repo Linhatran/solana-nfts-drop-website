@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import CandyMachine from './CandyMachine';
 import './App.css';
 
 const App = () => {
@@ -20,9 +21,7 @@ const App = () => {
     } catch (e) {
       console.log('Error:', e);
       if (e.code === 4001 && e.message === 'User rejected the request.')
-        window.alert(
-          'An error occured. Make sure to login to Phantom.'
-        );
+        window.alert('An error occured. Make sure to login to Phantom.');
     }
   };
 
@@ -61,6 +60,7 @@ const App = () => {
             </button>
           )}
         </div>
+        {walletAddress && <CandyMachine walletAddress={walletAddress} />}
       </div>
     </div>
   );

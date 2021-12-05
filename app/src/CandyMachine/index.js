@@ -315,21 +315,20 @@ const CandyMachine = ({ walletAddress }) => {
       process.env.REACT_APP_CANDY_MACHINE_ID,
       true
     );
-
+    const newMints = [];
     if (data.length !== 0) {
       for (const mint of data) {
         // Get URI
         const response = await fetch(mint.data.uri);
         const parse = await response.json();
-        console.log('Past Minted NFT', mint);
 
         // Get image URI
         if (!mints.find((mint) => mint === parse.image)) {
-          console.log('in if');
-          setMints([...mints, parse.image]);
+          newMints.push(parse.image);
         }
       }
     }
+    setMints(newMints);
     setIsLoadingMints(false);
     setMachineStats({
       itemsAvailable,

@@ -188,18 +188,13 @@ const CandyMachine = ({ walletAddress }) => {
         instructions,
       });
 
-      console.log('txn:', txn);
-
       // Setup listener
       connection.onSignatureWithOptions(
         txn,
         async (notification, context) => {
           if (notification.type === 'status') {
-            console.log('Receievd status event');
-
             const { result } = notification;
             if (!result.err) {
-              console.log('NFT Minted!');
               setIsMinting(false);
               await getCandyMachineState();
             }
@@ -301,14 +296,6 @@ const CandyMachine = ({ walletAddress }) => {
     ).toLocaleDateString()} @ ${new Date(
       goLiveDate * 1000
     ).toLocaleTimeString()}`;
-
-    console.log({
-      itemsAvailable,
-      itemsRedeemed,
-      itemsRemaining,
-      goLiveDate,
-      goLiveDateTimeString,
-    });
 
     setIsLoadingMints(true);
 

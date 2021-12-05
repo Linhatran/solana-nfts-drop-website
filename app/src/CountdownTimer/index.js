@@ -5,8 +5,6 @@ const CountdownTimer = ({ dropDate }) => {
   // State
   const [timerString, setTimerString] = useState('');
   useEffect(() => {
-    console.log('Setting interval...', dropDate);
-
     // Use setInterval to run this piece of code every second
     const interval = setInterval(() => {
       const currentDate = new Date().getTime();
@@ -25,7 +23,6 @@ const CountdownTimer = ({ dropDate }) => {
 
       // If our distance passes zero this means that it's drop time!
       if (distance < 0) {
-        console.log('Clearing interval...');
         clearInterval(interval);
       }
     }, 1000);
@@ -37,7 +34,7 @@ const CountdownTimer = ({ dropDate }) => {
       }
     };
   }, [dropDate]);
-  console.log(timerString);
+
   return (
     <div className='timer-container'>
       <p className='timer-header'>Candy Drop Starting In</p>

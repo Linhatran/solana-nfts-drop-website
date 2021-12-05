@@ -17,3 +17,6 @@ Make sure to create `.env` in the root of `app` folder.
 
 `REACT_APP_SOLANA_RPC_HOST` - This is pretty much the same as above. Since we are accessing out Candy Machine on devnet we need to point the RPC to that devnet link which is https://explorer-api.devnet.solana.com
 
+Deployed link: https://vercel.com/linhatran/solana-nfts-drop-website
+
+!['Final product'](app/src/screenshot.png)

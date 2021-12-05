@@ -384,7 +384,7 @@ const CandyMachine = ({ walletAddress }) => {
       {mints.length > 0 && renderMintedItems()}
     </div>
   ) : (
-    <p>Loading...</p>
+    <p>Just wait a little bit...</p>
   );
 };
 

@@ -7,17 +7,7 @@ const App = () => {
 
   const checkIfPhantomIsConnected = async () => {
     try {
-      const { solana } = window;
-
-      if (solana.isPhantom) {
-        console.log('Connected to Phantom wallet');
-        const resp = await window.solana.connect({ onlyIfTrusted: true });
-        setWalletAddress(resp.publicKey.toString());
-      } else {
-        console.log(
-          'Phantom wallet not found. Please connect to a Phantom wallet'
-        );
-      }
+      await connectToPhantomWallet();
     } catch (e) {
       console.log('Error:', e);
       if (e.code === 4001 && e.message === 'User rejected the request.')
@@ -40,8 +30,11 @@ const App = () => {
     if (solana.isPhantom) {
       console.log('Connected to Phantom wallet');
       const resp = await window.solana.connect({ onlyIfTrusted: true });
-      console.log('Connect with public key: ', resp.publicKey.toString());
-      setWalletAddress(resp.publicKey.toString());
+      setWalletAddress(resp);
+    } else {
+      console.log(
+        'Phantom wallet not found. Please connect to a Phantom wallet'
+      );
     }
   };
 

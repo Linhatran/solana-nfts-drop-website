@@ -48,7 +48,7 @@
 .cta-button {
   height: 45px;
   border: 0;
-  width: 200px;
+  width: fit-content;
   padding-left: 40px;
   padding-right: 40px;
   border-radius: 10px;

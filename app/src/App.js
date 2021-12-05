@@ -27,11 +27,9 @@ const App = () => {
       const { solana } = window;
 
       if (solana.isPhantom) {
-       
-        const resp = await window.solana.connect({ onlyIfTrusted: true });
+        const resp = await window.solana.connect();
         setWalletAddress(resp);
       } else {
-        
       }
     } catch (e) {
       handleError(e);
